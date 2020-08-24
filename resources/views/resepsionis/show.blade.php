@@ -1,0 +1,135 @@
+@extends('/master/master')
+
+@section('menu')
+
+<ul class="list">
+    <li class="header">MAIN NAVIGATION</li>
+    <a href="{{url('home')}}">
+        <i class="material-icons">home</i>
+        <span>Home</span>
+    </a>
+</li>
+<li>
+
+    <a href="{{url('/resepsionis/surat_masuk')}}">
+        <i class="material-icons">move_to_inbox</i>
+        <span>Surat Masuk</span>
+    </a>
+</li>
+<li>
+
+  <a href="{{url('/resepsionis/surat_keluar')}}">
+    <i class="material-icons">unarchive</i>
+    <span>Surat Keluar</span>
+</a>
+</li>
+<li>
+  <li class="active">
+  <a href="{{url('disposisi')}}">
+    <i class="material-icons">class</i>
+    <span>Disposisi</span>
+</a>
+</li>
+<li>
+
+  <a href="{{url('/resepsionis/arsip')}}">
+    <i class="material-icons">library_books</i>
+    <span>Arsip</span>
+</a>
+</li>
+</ul>
+
+@endsection
+
+@section('judul_halaman', 'Detail Disposisi')
+
+@section('konten')
+
+@if (count($errors) > 0)
+<div class="alert alert-danger">
+  <ul>
+    @foreach ($errors->all() as $error)
+    <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+</div>
+@endif
+@foreach($disposisi as $D)
+<form action="{{url('/disposisi/update')}}" method="POST" enctype="multipart/form-data">
+  {{ csrf_field() }}
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header">
+          <a href="{{url('disposisi')}}">
+            <button type="button" class="btn btn-primary waves-effect">
+              <i class="material-icons">backspace</i>
+              <span>KEMBALI</span>
+            </button>
+          </a>
+        </div>
+        <div class="body">
+          <form id="form_advanced_validation" method="POST">
+            <input type="hidden" name="id" value="{{ $D->id }}">
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="text" class="form-control" name="surat_dari" min="10" max="200" value="{{$D->surat_dari}}" disabled>
+                <label class="form-label">Surat Dari</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="text" class="form-control" name="no_surat" min="10" max="200" value="{{$D->no_surat}}" disabled>
+                <label class="form-label">No Surat</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="text" class="form-control" name="no_agenda" min="10" max="200" value="{{$D->no_agenda}}" disabled>
+                <label class="form-label">No Agenda</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="date" class="form-control" name="tgl_surat" value="{{$D->tgl_surat}}" disabled>
+                <label class="form-label">Tanggal Surat</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="date" class="form-control" name="tgl_terima" value="{{$D->tgl_terima}}" disabled>
+                <label class="form-label">Tanggal Terima</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="text" class="form-control" name="perihal" value="{{$D->perihal}}" disabled>
+                <label class="form-label">Perihal</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="text" class="form-control" name="perihal" value="{{$D->kepada}}" disabled>
+                <label class="form-label">Kepada</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="text" class="form-control" name="perihal" value="{{$D->isi_disposisi}}" disabled>
+                <label class="form-label">Isi Disposisi</label>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <input type="text" class="form-control" name="perihal" value="{{$D->diteruskan_kpd}}" disabled>
+                <label class="form-label">Diteruskan Kepada</label>
+              </div>
+            </div>
+          </form>
+          @endforeach
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+@endsection
